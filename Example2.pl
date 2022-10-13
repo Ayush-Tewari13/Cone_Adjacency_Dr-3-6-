@@ -37,7 +37,7 @@ print rows_labeled($S->MAXIMAL_CELLS,undef,["123","124","125","126","127","134",
 3:134 135 136 137 145 146 147 234 235 236 237 245 246 247 345 346 347
 4:123 124 125 126 127 134 135 136 137 234 235 236 237
 
-#####################################Function to verify matroidal subdivision (inspired from a polymake forum question (https://forum.polymake.org/viewtopic.php?t=568))
+#####################################Function to verify matroidal subdivision (inspired from a polymake-forum question (https://forum.polymake.org/viewtopic.php?t=568))
 
 sub matroidal {
   my ($edges)=@_;
