@@ -1,0 +1,62 @@
+----------Dr(3,6) computation -----------------
+
+needsPackage "Polyhedra"
+needsPackage "Tropical"
+
+k = 3;
+n = 6;
+------------------------ form a ring R with the variables in the correct order:
+
+R1 = QQ[for s in subsets(n,k) list p_(toSequence apply(s, i -> i+1))]
+J = Grassmannian(k-1, n-1, R1) 
+G = gens J 
+-------------------------------- note these live in a polynomial ring over ZZ 
+M = monoid ring G 
+R = QQ M 
+H = sub(G, R) 
+
+vs = flatten entries vars R1  -------------------- list of all plucker variables
+
+
+TL = tropicalVariety ideal H ----- for computing the tropical grassmanian trop Gr(3,6) (refer Table 2 from the paper "How to draw tropical planes")
+
+Rays = rays TL
+
+M = maxCones TL
+
+---- for computing Dr(3,6) - we collect all the three term Plucker relations from the 35 plucker relations and compute the tropical prevariety
+
+h = {}
+for i from 0 to 34 when i < 35 do (
+l = length(support matrix{H_i});
+if l == 6 then (
+h = append(h,i);
+);
+)
+
+g = submatrix(H,h)
+L = first entries g 
+DR = tropicalPrevariety L
+
+Rays1 = rays DR
+
+M1 = maxCones DR
+
+---------- constructing weight vector for each cone,
+
+
+
+for m in M1 do ( 
+g = {};
+n = length(m);
+w = vector{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+for i from 0 to n-1 when i < n do (
+w =  w + (Rays1_(m#i));          
+);
+print entries (w);
+)
+
+
+------------------------- We parse these weight vectors in polymake in to compute the corresponding matroidal subdivisions 
+
+
